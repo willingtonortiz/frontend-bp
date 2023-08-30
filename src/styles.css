@@ -5,7 +5,13 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 :root {
-  --background: #fddd4b;
+  --background: #f5f6fa;
+  --primary: #fddd4b;
   --foreground: #313e5c;
 }

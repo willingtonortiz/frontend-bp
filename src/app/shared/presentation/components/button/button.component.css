@@ -1,6 +1,6 @@
 button {
   padding: 1rem;
-  background-color: var(--background);
+  background-color: var(--primary);
   color: var(--foreground);
   border: none;
   font-weight: bold;
