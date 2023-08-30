@@ -1,0 +1,12 @@
+header {
+  width: 100%;
+  height: 48px;
+  background-color: #ffffff;
+
+  display: grid;
+  place-items: center;
+
+  & img {
+    height: 32px;
+  }
+}
