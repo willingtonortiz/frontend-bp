@@ -7,6 +7,7 @@ import { ButtonComponent } from './shared/presentation/components/button/button.
 import { ProductListPageComponent } from './modules/products/presentation/pages/product-list-page/product-list-page.component';
 import { AddProductPageComponent } from './modules/products/presentation/pages/add-product-page/add-product-page.component';
 import { EditProductPageComponent } from './modules/products/presentation/pages/edit-product-page/edit-product-page.component';
+import { HeaderComponent } from './shared/presentation/components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { EditProductPageComponent } from './modules/products/presentation/pages/
     ProductListPageComponent,
     AddProductPageComponent,
     EditProductPageComponent,
+    HeaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
