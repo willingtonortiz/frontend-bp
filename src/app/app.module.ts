@@ -4,12 +4,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './shared/presentation/components/button/button.component';
-import { ProductListPageComponent } from './modules/products/presentation/pages/product-list-page/product-list-page.component';
-import { AddProductPageComponent } from './modules/products/presentation/pages/add-product-page/add-product-page.component';
-import { EditProductPageComponent } from './modules/products/presentation/pages/edit-product-page/edit-product-page.component';
+import {
+  ProductListPageComponent,
+  AddProductPageComponent,
+  EditProductPageComponent,
+} from './modules/products/presentation/pages';
 import { HeaderComponent } from './shared/presentation/components/header/header.component';
+import { HttpProductsRepository } from './modules/products/infrastructure/repositories/http-products-repository';
+import { ProductsRepository } from './modules/products/domain/repositories/products-repository';
+import { ProductsService } from './modules/products/domain/services/products-service';
+import { ProductsServiceImpl } from './modules/products/infrastructure/services/products-service-impl';
 
 @NgModule({
+  imports: [BrowserModule, AppRoutingModule],
   declarations: [
     AppComponent,
     ButtonComponent,
@@ -18,8 +25,16 @@ import { HeaderComponent } from './shared/presentation/components/header/header.
     EditProductPageComponent,
     HeaderComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [],
+  providers: [
+    {
+      provide: ProductsRepository,
+      useClass: HttpProductsRepository,
+    },
+    {
+      provide: ProductsService,
+      useClass: ProductsServiceImpl,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
