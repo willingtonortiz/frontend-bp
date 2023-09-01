@@ -1,1 +1,98 @@
-<p>product-list-page works!</p>
+<div class="container">
+  <div class="row">
+    <input
+      #searchInput
+      (input)="onInput(searchInput.value)"
+      type="text"
+      placeholder="Search..."
+    />
+
+    <a routerLink="/add">Agregar</a>
+  </div>
+
+  <div class="card">
+    <div class="tableContainer">
+      <table>
+        <thead>
+          <tr>
+            <th class="center">Logo</th>
+            <th>Nombre del producto</th>
+            <th>Descripción</th>
+            <th>Fecha de liberación</th>
+            <th>Fecha de reestructuración</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let product of pageProducts$ | async">
+            <td class="center">
+              <img
+                src="{{ product.logo }}"
+                alt="{{ product.name }} logo"
+                height="30"
+              />
+            </td>
+
+            <td>{{ product.name }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.dateRelease | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ product.dateRevision | date: 'dd/MM/yyyy' }}</td>
+            <td>
+              <div class="options" tabindex="-1">
+                <img src="assets/icons/dots-y.svg" alt="Opciones" />
+
+                <ul class="options__list">
+                  <li>
+                    <a routerLink="/edit/{{ product.id }}">Editar</a>
+                  </li>
+
+                  <li>
+                    <span>Eliminar</span>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="row">
+      <span>{{ (allProducts$ | async)?.length }} Resultados</span>
+
+      <div class="right">
+        <div>
+          <span> Elementos por página: </span>
+
+          <select
+            #pageSize
+            class="pageSize"
+            (change)="onPageSizeChange(pageSize.value)"
+          >
+            <option value="5">5</option>
+            <option value="10">10</option>
+          </select>
+        </div>
+
+        <div class="pagination">
+          <button
+            (click)="onPreviousPage()"
+            [disabled]="(currentPage$ | async) === 1"
+          >
+            Anterior
+          </button>
+          <span>
+            Página {{ currentPage$ | async }} de {{ totalPages$ | async }}
+          </span>
+          <button
+            (click)="onNextPage()"
+            [disabled]="(currentPage$ | async) === (totalPages$ | async)"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
