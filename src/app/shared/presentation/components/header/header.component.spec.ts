@@ -19,7 +19,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
+  it('should show the application name', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     expect(compiled.querySelector('img')?.alt).toContain('Banco Pichincha');
