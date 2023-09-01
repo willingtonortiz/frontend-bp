@@ -5,4 +5,5 @@ button {
   border: none;
   font-weight: bold;
   cursor: pointer;
+  font-size: var(--font-base);
 }

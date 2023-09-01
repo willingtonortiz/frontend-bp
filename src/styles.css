@@ -22,8 +22,7 @@ body {
 
 :root {
   --background: #f5f6fa;
-  /*--primary: #fddd4b;*/
-  --primary: transparent;
+  --primary: #fddd4b;
   --foreground: #313e5c;
   --max-screen-width: 1200px;
   --font-base: 12px;
