@@ -47,3 +47,23 @@ input {
     color: grey;
   }
 }
+
+button {
+  padding: 1rem;
+  background-color: var(--primary);
+  color: var(--foreground);
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: var(--font-base);
+
+  &.secondary {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
