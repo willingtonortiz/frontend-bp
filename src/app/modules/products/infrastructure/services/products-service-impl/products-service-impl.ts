@@ -27,14 +27,14 @@ export class ProductsServiceImpl implements ProductsService {
     return this.productsRepository.checkIdExists(id);
   }
 
-  addProduct(product: ProductItem): Observable<ProductItem> {
+  addOne(product: ProductItem): Observable<ProductItem> {
     console.log(product);
     product.dateRelease = fromDDMMYYYYTOYYYYMMDD(product.dateRelease);
     product.dateRevision = fromDDMMYYYYTOYYYYMMDD(product.dateRevision);
 
     const productDto = productItemToProductItemDto(product);
     return this.productsRepository
-      .addProduct(productDto)
+      .addOne(productDto)
       .pipe(map(productItemDtoToProductItem));
   }
 }

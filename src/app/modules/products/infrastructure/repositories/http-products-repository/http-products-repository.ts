@@ -36,7 +36,7 @@ export class HttpProductsRepository implements ProductsRepository {
     });
   }
 
-  addProduct(product: ProductItemDto): Observable<ProductItemDto> {
+  addOne(product: ProductItemDto): Observable<ProductItemDto> {
     const url = ProductResources.addProduct.replace(
       ':base',
       environment.productsApiUrl,

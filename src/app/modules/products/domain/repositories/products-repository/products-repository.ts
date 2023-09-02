@@ -5,7 +5,7 @@ import { ProductItemDto } from './products-repository-models';
 export interface ProductsRepository {
   getAll(): Observable<ProductItemDto[]>;
   checkIdExists(id: string): Observable<boolean>;
-  addProduct(product: ProductItemDto): Observable<ProductItemDto>;
+  addOne(product: ProductItemDto): Observable<ProductItemDto>;
 }
 
 export const ProductsRepository = new InjectionToken<ProductsRepository>(
