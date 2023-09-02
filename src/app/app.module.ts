@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +9,6 @@ import { ButtonComponent } from './shared/presentation/components/button/button.
 import {
   ProductListPageComponent,
   AddProductPageComponent,
-  EditProductPageComponent,
 } from './modules/products/presentation/pages';
 import { HeaderComponent } from './shared/presentation/components/header/header.component';
 import { HttpProductsRepository } from './modules/products/infrastructure/repositories/http-products-repository';
@@ -17,13 +17,17 @@ import { ProductsService } from './modules/products/domain/services/products-ser
 import { ProductsServiceImpl } from './modules/products/infrastructure/services/products-service-impl';
 
 @NgModule({
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     AppComponent,
     ButtonComponent,
     ProductListPageComponent,
     AddProductPageComponent,
-    EditProductPageComponent,
     HeaderComponent,
   ],
   providers: [
