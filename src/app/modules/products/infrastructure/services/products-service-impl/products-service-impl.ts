@@ -58,6 +58,10 @@ export class ProductsServiceImpl implements ProductsService {
       .updateOne(productDto)
       .pipe(map(productItemDtoToProductItem));
   }
+
+  deleteOne(id: string): Observable<void> {
+    return this.productsRepository.deleteOne(id);
+  }
 }
 
 function fromDDMMYYYYTOYYYYMMDD(date: string): string {

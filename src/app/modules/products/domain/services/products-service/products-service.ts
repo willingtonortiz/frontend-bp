@@ -8,6 +8,7 @@ export interface ProductsService {
   checkIdExists(id: string): Observable<boolean>;
   addOne(product: ProductItem): Observable<ProductItem>;
   updateOne(product: ProductItem): Observable<ProductItem>;
+  deleteOne(id: string): Observable<void>;
 }
 
 export const ProductsService = new InjectionToken<ProductsService>(

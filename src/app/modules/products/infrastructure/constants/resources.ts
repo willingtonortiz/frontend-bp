@@ -4,4 +4,5 @@ export const ProductResources = {
   checkIdExists: ':base/bp/products/verification?id=:id',
   addOne: ':base/bp/products',
   updateOne: ':base/bp/products',
+  deleteOne: ':base/bp/products?id=:id',
 };

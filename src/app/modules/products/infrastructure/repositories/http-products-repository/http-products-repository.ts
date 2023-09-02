@@ -72,4 +72,14 @@ export class HttpProductsRepository implements ProductsRepository {
       headers: { authorId: environment.authorId },
     });
   }
+
+  deleteOne(id: string): Observable<void> {
+    const url = ProductResources.deleteOne
+      .replace(':base', environment.productsApiUrl)
+      .replace(':id', id);
+
+    return this.client.delete<void>(url, {
+      headers: { authorId: environment.authorId },
+    });
+  }
 }

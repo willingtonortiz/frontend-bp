@@ -8,6 +8,7 @@ export interface ProductsRepository {
   getOne(id: string): Observable<ProductItemDto | null>;
   addOne(product: ProductItemDto): Observable<ProductItemDto>;
   updateOne(product: ProductItemDto): Observable<ProductItemDto>;
+  deleteOne(id: string): Observable<void>;
 }
 
 export const ProductsRepository = new InjectionToken<ProductsRepository>(
