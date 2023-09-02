@@ -27,6 +27,17 @@ export class ProductsServiceImpl implements ProductsService {
     return this.productsRepository.checkIdExists(id);
   }
 
+  getOne(id: string): Observable<ProductItem | null> {
+    return this.productsRepository.getOne(id).pipe(
+      map((product) => {
+        if (product) {
+          return productItemDtoToProductItem(product);
+        }
+        return null;
+      }),
+    );
+  }
+
   addOne(product: ProductItem): Observable<ProductItem> {
     console.log(product);
     product.dateRelease = fromDDMMYYYYTOYYYYMMDD(product.dateRelease);
@@ -35,6 +46,16 @@ export class ProductsServiceImpl implements ProductsService {
     const productDto = productItemToProductItemDto(product);
     return this.productsRepository
       .addOne(productDto)
+      .pipe(map(productItemDtoToProductItem));
+  }
+
+  updateOne(product: ProductItem): Observable<ProductItem> {
+    product.dateRelease = fromDDMMYYYYTOYYYYMMDD(product.dateRelease);
+    product.dateRevision = fromDDMMYYYYTOYYYYMMDD(product.dateRevision);
+
+    const productDto = productItemToProductItemDto(product);
+    return this.productsRepository
+      .updateOne(productDto)
       .pipe(map(productItemDtoToProductItem));
   }
 }
