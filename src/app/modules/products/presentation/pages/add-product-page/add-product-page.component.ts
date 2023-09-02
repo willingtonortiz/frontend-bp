@@ -90,7 +90,6 @@ export class AddProductPageComponent implements OnInit, OnDestroy {
           Validators.minLength(3),
           Validators.maxLength(10),
         ],
-        idValidator(productsService, this.subscriptions),
       ],
       name: [
         '',
@@ -136,15 +135,32 @@ export class AddProductPageComponent implements OnInit, OnDestroy {
     const productId = this.route.snapshot.paramMap.get('id');
     if (productId) {
       this.type = 'edit';
-      this.form.get('id')?.setValue(productId);
-      this.form.get('id')?.disable();
-      this.form.get('name')?.setValue('Product 1');
-      this.form.get('description')?.setValue('Description 1');
-      this.form.get('logo')?.setValue('Logo 1');
-      this.form.get('dateRelease')?.setValue('01/01/2021');
+      this.productsService.getOne(productId).subscribe({
+        next: async (product) => {
+          if (!product) {
+            await this.router.navigate(['/']);
+            return;
+          }
+
+          product.dateRelease = dateToDDMMYYYY(new Date(product.dateRelease));
+          product.dateRevision = dateToDDMMYYYY(new Date(product.dateRevision));
+
+          this.setProductToForm(product);
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {},
+      });
       return;
     }
 
+    // Only add id validation if it is a new product
+    this.form
+      .get('id')
+      ?.addAsyncValidators(
+        idValidator(this.productsService, this.subscriptions),
+      );
     const now = new Date();
     const dateRelease = dateToDDMMYYYY(now);
     this.form.get('dateRelease')?.setValue(dateRelease);
@@ -154,13 +170,55 @@ export class AddProductPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  addProduct() {
+  setProductToForm(product: ProductItem) {
+    this.form.get('id')?.setValue(product.id);
+    this.form.get('name')?.setValue(product.name);
+    this.form.get('description')?.setValue(product.description);
+    this.form.get('logo')?.setValue(product.logo);
+    this.form.get('dateRelease')?.setValue(product.dateRelease);
+    this.form.get('dateRevision')?.setValue(product.dateRevision);
+  }
+
+  addOrEditProduct() {
+    if (this.type === 'add') {
+      this.addProduct();
+      return;
+    }
+
+    this.editProduct();
+  }
+
+  private addProduct() {
     if (this.form.invalid) return;
     const product = this.form.value as ProductItem;
     this.isSubmitting = true;
-    this.productsService.addOne(product).subscribe((result) => {
-      this.isSubmitting = false;
-      this.router.navigate(['/']);
+    this.productsService.addOne(product).subscribe({
+      next: async () => {
+        await this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      },
+    });
+  }
+
+  private editProduct() {
+    if (this.form.invalid) return;
+    const product = this.form.value as ProductItem;
+    this.isSubmitting = true;
+    this.productsService.updateOne(product).subscribe({
+      next: async () => {
+        await this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      },
     });
   }
 

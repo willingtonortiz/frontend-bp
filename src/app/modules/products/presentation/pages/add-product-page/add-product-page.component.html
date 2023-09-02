@@ -1,10 +1,15 @@
 <div class="card">
-  <h1>Formulario de Registro</h1>
+  <h1>Formulario de {{ type === 'add' ? 'Registro' : 'Edición' }}</h1>
 
   <form class="form" [formGroup]="form">
     <div class="group">
       <label for="id">ID</label>
-      <input id="id" formControlName="id" type="text" />
+      <input
+        id="id"
+        formControlName="id"
+        type="text"
+        [readOnly]="type === 'edit'"
+      />
       <ng-container *ngIf="form.get('id')?.dirty || form.get('id')?.touched">
         <ng-container
           *ngIf="
@@ -125,7 +130,9 @@
         Reiniciar
       </button>
 
-      <button [disabled]="form.invalid" (click)="addProduct()">Enviar</button>
+      <button [disabled]="form.invalid" (click)="addOrEditProduct()">
+        Enviar
+      </button>
     </div>
   </form>
 </div>
