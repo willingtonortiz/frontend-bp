@@ -22,7 +22,28 @@ export class HttpProductsRepository implements ProductsRepository {
     );
 
     return this.client.get<ProductItemDto[]>(url, {
-      headers: { authorId: '252135325' },
+      headers: { authorId: environment.authorId },
+    });
+  }
+
+  checkIdExists(id: string): Observable<boolean> {
+    const url = ProductResources.verifyId
+      .replace(':base', environment.productsApiUrl)
+      .replace(':id', id);
+
+    return this.client.get<boolean>(url, {
+      headers: { authorId: environment.authorId },
+    });
+  }
+
+  addProduct(product: ProductItemDto): Observable<ProductItemDto> {
+    const url = ProductResources.addProduct.replace(
+      ':base',
+      environment.productsApiUrl,
+    );
+
+    return this.client.post<ProductItemDto>(url, product, {
+      headers: { authorId: environment.authorId },
     });
   }
 }

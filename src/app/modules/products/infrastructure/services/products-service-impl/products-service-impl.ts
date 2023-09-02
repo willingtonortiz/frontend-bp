@@ -22,6 +22,26 @@ export class ProductsServiceImpl implements ProductsService {
       .getAll()
       .pipe(map((products) => products.map(productItemDtoToProductItem)));
   }
+
+  checkIdExists(id: string): Observable<boolean> {
+    return this.productsRepository.checkIdExists(id);
+  }
+
+  addProduct(product: ProductItem): Observable<ProductItem> {
+    console.log(product);
+    product.dateRelease = fromDDMMYYYYTOYYYYMMDD(product.dateRelease);
+    product.dateRevision = fromDDMMYYYYTOYYYYMMDD(product.dateRevision);
+
+    const productDto = productItemToProductItemDto(product);
+    return this.productsRepository
+      .addProduct(productDto)
+      .pipe(map(productItemDtoToProductItem));
+  }
+}
+
+function fromDDMMYYYYTOYYYYMMDD(date: string): string {
+  const [day, month, year] = date.split('/');
+  return `${year}-${month}-${day}`;
 }
 
 function productItemDtoToProductItem(
@@ -34,5 +54,16 @@ function productItemDtoToProductItem(
     logo: productItemDto.logo,
     dateRelease: productItemDto.date_release,
     dateRevision: productItemDto.date_revision,
+  };
+}
+
+function productItemToProductItemDto(productItem: ProductItem): ProductItemDto {
+  return {
+    id: productItem.id,
+    name: productItem.name,
+    description: productItem.description,
+    logo: productItem.logo,
+    date_release: productItem.dateRelease,
+    date_revision: productItem.dateRevision,
   };
 }
