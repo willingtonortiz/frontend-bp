@@ -1,1 +1,131 @@
-<p>add-product-page works!</p>
+<div class="card">
+  <h1>Formulario de Registro</h1>
+
+  <form class="form" [formGroup]="form">
+    <div class="group">
+      <label for="id">ID</label>
+      <input id="id" formControlName="id" type="text" />
+      <ng-container *ngIf="form.get('id')?.dirty || form.get('id')?.touched">
+        <ng-container
+          *ngIf="
+            form.get('id')?.hasError('required') ||
+            form.get('id')?.hasError('invalid')
+          "
+        >
+          <span>ID no válido!</span>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            form.get('id')?.hasError('minlength') ||
+            form.get('id')?.hasError('maxlength')
+          "
+        >
+          <span>ID debe tener entre 3 y 10 caracteres</span>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="group">
+      <label for="name">Nombre</label>
+      <input id="name" formControlName="name" type="text" />
+      <ng-container
+        *ngIf="form.get('name')?.dirty || form.get('name')?.touched"
+      >
+        <ng-container *ngIf="form.get('name')?.hasError('required')">
+          <span>El nombre es requerido</span>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            form.get('name')?.hasError('minlength') ||
+            form.get('name')?.hasError('maxlength')
+          "
+        >
+          <span>ID debe tener entre 5 y 100 caracteres</span>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="group">
+      <label for="description">Descripción</label>
+      <input id="description" formControlName="description" type="text" />
+      <ng-container
+        *ngIf="
+          form.get('description')?.dirty || form.get('description')?.touched
+        "
+      >
+        <ng-container *ngIf="form.get('description')?.hasError('required')">
+          <span>La descripción es requerida</span>
+        </ng-container>
+        <ng-container
+          *ngIf="
+            form.get('description')?.hasError('minlength') ||
+            form.get('description')?.hasError('maxlength')
+          "
+        >
+          <span>ID debe tener entre 10 y 200 caracteres</span>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="group">
+      <label for="logo">Logo</label>
+      <input id="logo" formControlName="logo" type="text" />
+      <ng-container
+        *ngIf="form.get('logo')?.dirty || form.get('logo')?.touched"
+      >
+        <ng-container *ngIf="form.get('logo')?.hasError('required')">
+          <span>El logo es requerido</span>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="group">
+      <label for="dateRelease">Fecha Liberación</label>
+      <input id="dateRelease" formControlName="dateRelease" type="text" />
+      <ng-container
+        *ngIf="
+          form.get('dateRelease')?.dirty || form.get('dateRelease')?.touched
+        "
+      >
+        <ng-container *ngIf="form.get('dateRelease')?.hasError('required')">
+          <span>La fecha es requerida</span>
+        </ng-container>
+
+        <ng-container *ngIf="form.get('dateRelease')?.hasError('minDate')">
+          <span>La fecha debe ser mayor o igual a la fecha actual</span>
+        </ng-container>
+
+        <ng-container *ngIf="form.get('dateRelease')?.hasError('dateFormat')">
+          <span>Formato de fecha incorrecto</span>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="group">
+      <label for="dateRevision">Fecha Revisión</label>
+      <input
+        id="dateRevision"
+        formControlName="dateRevision"
+        type="text"
+        readonly
+      />
+      <ng-container
+        *ngIf="
+          form.get('dateRevision')?.dirty || form.get('dateRevision')?.touched
+        "
+      >
+        <ng-container *ngIf="form.get('dateRevision')?.hasError('required')">
+          <span>La fecha es requerida</span>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="secondary" (click)="restart()">
+        Reiniciar
+      </button>
+
+      <button [disabled]="form.invalid" (click)="addProduct()">Enviar</button>
+    </div>
+  </form>
+</div>

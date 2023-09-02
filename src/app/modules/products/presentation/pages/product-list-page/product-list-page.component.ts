@@ -7,6 +7,7 @@ import {
   map,
   Observable,
   of,
+  shareReplay,
   Subscription,
 } from 'rxjs';
 
@@ -19,7 +20,7 @@ import { ProductItem } from '../../../domain/models/product';
   styleUrls: ['./product-list-page.component.css'],
 })
 export class ProductListPageComponent implements OnInit, OnDestroy {
-  allProducts$ = this.productsService.getAll();
+  allProducts$ = this.productsService.getAll().pipe(shareReplay(1));
   searchValue$ = new BehaviorSubject('');
   currentPage$ = new BehaviorSubject(1);
   totalPages$: Observable<number> = of(0);

@@ -24,6 +24,7 @@ describe('ProductListPageComponent', () => {
   });
 
   it('should create', () => {
+    productsService.getAll.and.returnValue(of([]));
     fixture = TestBed.createComponent(ProductListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
