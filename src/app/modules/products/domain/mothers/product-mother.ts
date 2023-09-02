@@ -2,7 +2,7 @@ import { ProductItem } from '../models/product';
 
 export class ProductMother {
   static random(): ProductItem {
-    const id = crypto.randomUUID();
+    const id = crypto.randomUUID().substring(0, 5);
     return {
       id,
       name: `Product ${id}`,
