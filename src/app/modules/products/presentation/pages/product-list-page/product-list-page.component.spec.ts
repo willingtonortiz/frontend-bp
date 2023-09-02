@@ -11,7 +11,7 @@ describe('ProductListPageComponent', () => {
   let productsService: any;
 
   beforeEach(() => {
-    productsService = jasmine.createSpyObj(['getAll']);
+    productsService = jasmine.createSpyObj(['getAll', 'deleteOne']);
     TestBed.configureTestingModule({
       declarations: [ProductListPageComponent],
       providers: [
@@ -134,4 +134,30 @@ describe('ProductListPageComponent', () => {
     const products3 = await firstValueFrom(component.pageProducts$);
     expect(products3.length).toBe(5);
   }));
+
+  it('should call the get products method from products service', () => {
+    const products = [ProductMother.random()];
+    productsService.getAll.and.returnValue(of(products));
+    productsService.deleteOne.and.returnValue(of(null));
+
+    fixture = TestBed.createComponent(ProductListPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    expect(productsService.getAll).toHaveBeenCalled();
+  });
+
+  it('should call the delete method from products service', () => {
+    const product = ProductMother.random();
+    productsService.getAll.and.returnValue(of([product]));
+    productsService.deleteOne.and.returnValue(of(null));
+
+    fixture = TestBed.createComponent(ProductListPageComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    component.deleteProduct(product.id);
+
+    expect(productsService.deleteOne).toHaveBeenCalledWith(product.id);
+  });
 });
