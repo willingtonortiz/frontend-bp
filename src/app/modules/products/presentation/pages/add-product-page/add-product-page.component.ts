@@ -73,6 +73,7 @@ export class AddProductPageComponent implements OnInit, OnDestroy {
   type: 'add' | 'edit' = 'add';
   form: FormGroup<FormFields>;
   isSubmitting = false;
+  errorMessage = '';
 
   constructor(
     @Inject(ProductsService)
@@ -149,6 +150,7 @@ export class AddProductPageComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error(err);
+          this.errorMessage = err.message;
         },
         complete: () => {},
       });
@@ -198,6 +200,7 @@ export class AddProductPageComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error(err);
+        this.errorMessage = err.message;
       },
       complete: () => {
         this.isSubmitting = false;
@@ -215,6 +218,7 @@ export class AddProductPageComponent implements OnInit, OnDestroy {
       },
       error: (err) => {
         console.error(err);
+        this.errorMessage = err.message;
       },
       complete: () => {
         this.isSubmitting = false;

@@ -136,3 +136,12 @@
     </div>
   </form>
 </div>
+
+<ng-container *ngIf="errorMessage">
+  <dialog>
+    <div>
+      <p>Ocurrió un error, por favor intentalo de nuevo más tarde.</p>
+      <button (click)="errorMessage = ''">Cerrar</button>
+    </div>
+  </dialog>
+</ng-container>
