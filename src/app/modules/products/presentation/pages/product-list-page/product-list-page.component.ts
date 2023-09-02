@@ -27,6 +27,7 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
   pageSize$ = new BehaviorSubject(5);
   pageProducts$: Observable<ProductItem[]> = of([]);
   subscriptions: Subscription[] = [];
+  errorMessage = '';
 
   constructor(
     @Inject(ProductsService)
@@ -93,5 +94,17 @@ export class ProductListPageComponent implements OnInit, OnDestroy {
 
   onPageSizeChange(pageSize: string) {
     this.pageSize$.next(Number(pageSize));
+  }
+
+  deleteProduct(id: string) {
+    this.productsService.deleteOne(id).subscribe({
+      next: () => {
+        this.allProducts$ = this.productsService.getAll().pipe(shareReplay(1));
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = err.message;
+      },
+    });
   }
 }
